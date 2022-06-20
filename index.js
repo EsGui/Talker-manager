@@ -83,10 +83,10 @@ app.post('/talker',
   checkTalkRate.checkTalkRateRequired,
   checkTalkRate.checkTalkRate1a5,
   checkTalkWatchedAt,
-  (req, res) => {
+  async (req, res) => {
   const { name, age, talk } = req.body;
   const data = fs.readFileSync(nomeDoArquivo, 'utf-8');
-  newPerson({ id: JSON.parse(data).length + 1, name, age, talk });
+  await newPerson({ id: JSON.parse(data).length + 1, name, age, talk });
   return res.status(201).json({ id: JSON.parse(data).length + 1, name, age, talk });
 });
 
