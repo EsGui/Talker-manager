@@ -1,4 +1,4 @@
-const fs = require('fs').promises;
+const fs = require('fs/promises');
 
 const sourceFile = './talker.json';
 const encoding = 'utf-8';
