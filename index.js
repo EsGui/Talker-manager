@@ -21,7 +21,7 @@ app.use(bodyParser.json());
 const HTTP_OK_STATUS = 200;
 const PORT = '3000';
 
-// tentando enviar requisito 5: 2 tentativa
+// tentando enviar requisito 5: 3 tentativa
 
 const nomeDoArquivo = 'talker.json';
 
