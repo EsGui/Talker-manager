@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const crypto = require('crypto');
 const fs = require('fs');
 
 const app = express();
@@ -9,6 +10,22 @@ const HTTP_OK_STATUS = 200;
 const PORT = '3000';
 
 const nomeDoArquivo = 'talker.json';
+
+function validEmail(email, res) {
+  if (!email) {
+    return res.status(400).json({ message: 'O campo "email" é obrigatório' });
+  } if (!email.includes('@')) {
+    return res.status(400).json({ message: 'O "email" deve ter o formato "email@email.com"' });
+  }
+}
+
+function validPassword(password, res) {
+  if (!password) {
+    return res.status(400).json({ message: 'O campo "password" é obrigatório' });
+  } if (password.length < 6) {
+    return res.status(400).json({ message: 'O "password" deve ter pelo menos 6 caracteres' });
+  }
+}
 
 // não remova esse endpoint, e para o avaliador funcionar
 app.get('/', (_request, response) => {
@@ -33,6 +50,15 @@ app.get('/talker/:id', (req, res) => {
   if (!talker) return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
 
   res.status(200).json(talker);
+});
+
+app.post('/login', (req, res) => {
+  const { email, password } = req.body;
+  const token = crypto.randomBytes(8).toString('hex');
+  if (email && password && password.length > 6 && email
+    .includes('@')) return res.status(200).json({ token });
+  validEmail(email, res);
+  validPassword(password, res);
 });
 
 app.listen(PORT, () => {
