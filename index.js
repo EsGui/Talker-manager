@@ -10,6 +10,8 @@ app.use(bodyParser.json());
 const HTTP_OK_STATUS = 200;
 const PORT = '3000';
 
+// tentando enviar requisito 5: 2 tentativa
+
 const nomeDoArquivo = 'talker.json';
 
 function validEmail(email, res) {
