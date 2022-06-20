@@ -24,6 +24,17 @@ app.get('/talker', (_request, response) => {
   }
 });
 
+app.get('/talker/:id', (req, res) => {
+  const { id } = req.params;
+  const data = fs.readFileSync(nomeDoArquivo, 'utf-8');
+  console.log(typeof JSON.parse(data).length);
+  const talker = JSON.parse(data).find((talk) => talk.id === Number(id));
+
+  if (!talker) return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
+
+  res.status(200).json(talker);
+});
+
 app.listen(PORT, () => {
   console.log('Online');
 });
