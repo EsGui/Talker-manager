@@ -5,7 +5,7 @@ const fs = require('fs');
 
 // import Middlewares-----------------------------------
 
-const newPerson = require('./newPerson');
+const newPerson = require('./middleware/newPerson');
 const checkToken = require('./middleware/checkToken');
 const checkName = require('./middleware/checkName');
 const checkAge = require('./middleware/checkAge');
