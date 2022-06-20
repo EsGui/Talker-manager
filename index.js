@@ -6,6 +6,8 @@ const fs = require('fs');
 // import Middlewares-----------------------------------
 
 const newPerson = require('./middleware/newPerson');
+const changePerson = require('./middleware/changePerson');
+const deletePerson = require('./middleware/deletePeson');
 const checkToken = require('./middleware/checkToken');
 const checkName = require('./middleware/checkName');
 const checkAge = require('./middleware/checkAge');
@@ -88,6 +90,28 @@ app.post('/talker',
   const data = fs.readFileSync(nomeDoArquivo, 'utf-8');
   await newPerson({ id: JSON.parse(data).length + 1, name, age, talk });
   return res.status(201).json({ id: JSON.parse(data).length + 1, name, age, talk });
+});
+
+app.put('/talker/:id',
+  checkToken,
+  checkName,
+  checkAge,
+  checkTalk,
+  checkTalkRate.checkTalkRateRequired,
+  checkTalkRate.checkTalkRate1a5,
+  checkTalkWatchedAt,
+  async (req, res) => {
+  const { id } = req.params;
+  const { name, age, talk } = req.body;
+  
+  await changePerson(name, age, talk, id);
+  res.status(200).json({ id: Number(id), name, age, talk });
+});
+
+app.delete('/talker/:id', checkToken, async (req, res) => {
+  const { id } = req.headers;
+  await deletePerson(id);
+  res.status(204).end();
 });
 
 app.listen(PORT, () => {
