@@ -93,12 +93,12 @@ app.post('/talker',
 });
 
 app.put('/talker/:id',
+  checkTalkRate.checkTalkRate1a5,
   checkToken,
   checkName,
   checkAge,
   checkTalk,
   checkTalkRate.checkTalkRateRequired,
-  checkTalkRate.checkTalkRate1a5,
   checkTalkWatchedAt,
   async (req, res) => {
   const { id } = req.params;
