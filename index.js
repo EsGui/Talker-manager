@@ -57,10 +57,16 @@ app.get('/talker', (_request, response) => {
   }
 });
 
+app.get('/talker/search', checkToken, (req, res) => {
+  const { q } = req.query;
+  const data = JSON.parse(fs.readFileSync(nomeDoArquivo, 'utf-8'));
+  const pesq = data.filter((element) => element.name.includes(q));
+  return res.status(200).json(pesq);
+});
+
 app.get('/talker/:id', (req, res) => {
   const { id } = req.params;
   const data = fs.readFileSync(nomeDoArquivo, 'utf-8');
-  console.log(typeof JSON.parse(data).length);
   const talker = JSON.parse(data).find((talk) => talk.id === Number(id));
 
   if (!talker) return res.status(404).json({ message: 'Pessoa palestrante não encontrada' });
